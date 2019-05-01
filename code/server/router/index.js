@@ -5,8 +5,15 @@ const router = koaRouter()
 
 export default app => {
 
-/*----------------------admin-------------------------------*/
+    /*----------------------admin-------------------------------*/
     // 用户请求
+    router.all('/*', async (ctx, next) => {
+        // *代表允许来自所有域名请求
+        ctx.set("Access-Control-Allow-Origin", "http://45.32.34.153");
+        ctx.set("Access-Control-Allow-Credentials", "true");
+        // 其他一些设置...
+        await next();
+    });
     router.post('/admin_demo_api/user/login', app.admin.user.login)
     router.get('/admin_demo_api/user/info', app.admin.user.info)
     router.get('/admin_demo_api/user/list', app.admin.user.list)
@@ -25,12 +32,12 @@ export default app => {
     router.post('/admin_demo_api/markdown_upload_img', app.admin.other.markdown_upload_img)
 
 
-/*----------------------client-------------------------------*/
+    /*----------------------client-------------------------------*/
     // client/文章请求
     router.get('/client_demo_api/blog/list', app.client.blog.list)
     router.get('/client_demo_api/blog/info', app.client.blog.info)
 
-    
+
 
 
     app.use(router.routes()).use(router.allowedMethods());

@@ -3,7 +3,7 @@ import qs from 'qs'
 import { Message } from 'element-ui'
 
 
-axios.defaults.withCredentials = true 
+axios.defaults.withCredentials = true
 
 // 发送时
 axios.interceptors.request.use(config => {
@@ -17,7 +17,7 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(response => response, err => Promise.resolve(err.response))
 
 // 检查状态码
-function checkStatus(res) { 
+function checkStatus(res) {
     // 结束
     if (res.status === 200 || res.status === 304) {
         return res.data
@@ -35,18 +35,18 @@ function checkStatus(res) {
 function checkCode(res) {
     if (res.code === 0) {
         Message({
-          message: res.msg,
-          type: 'error',
-          duration: 2 * 1000
+            message: res.msg,
+            type: 'error',
+            duration: 2 * 1000
         })
 
         throw new Error(res.msg)
     }
-    
+
     return res
 }
 
-const prefix = '/admin_demo_api/'
+const prefix = '//45.32.34.153:3000/admin_demo_api/'
 export default {
     get(url, params) {
         if (!url) return
