@@ -3,7 +3,7 @@ import qs from 'qs'
 import { Message } from 'element-ui'
 
 
-axios.defaults.withCredentials = true
+// axios.defaults.withCredentials = true
 
 // 发送时
 axios.interceptors.request.use(config => {
