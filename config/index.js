@@ -3,7 +3,7 @@ module.exports = {
         dev: {
             env: 'development',
             publicPath: '/',
-            host: 'localhost',
+            host: '0.0.0.0',
             port: '8090',
             assetsSubDirectory: 'static',
             devtoolType: 'cheap-module-eval-source-map',
@@ -32,7 +32,7 @@ module.exports = {
         dev: {
             env: 'development',
             publicPath: '/',
-            host: 'localhost',
+            host: '0.0.0.0',
             port: '8080',
             assetsSubDirectory: 'static',
             devtoolType: 'cheap-module-eval-source-map',
