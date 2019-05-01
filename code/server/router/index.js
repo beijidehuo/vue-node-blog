@@ -10,6 +10,8 @@ export default app => {
     router.all('/*', async (ctx, next) => {
         // *代表允许来自所有域名请求
         ctx.set("Access-Control-Allow-Origin", "*");
+        ctx.set("Access-Control-Allow-Headers", 'Content-Type,Content-Length, Authorization,\'Origin\',Accept,X-Requested-With');
+        ctx.set("Access-Control-Allow-Methods", 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
         // ctx.set("Access-Control-Allow-Credentials", "true");
         // 其他一些设置...
         await next();
