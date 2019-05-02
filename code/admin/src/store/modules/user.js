@@ -1,5 +1,5 @@
 import axios from 'src/utils/fetch'
-import {getToken} from 'src/utils/auth'
+import { getToken, setToken } from 'src/utils/auth'
 import md5 from 'js-md5'
 import axios1 from 'axios'
 
@@ -14,102 +14,103 @@ const user = {
 		otherList: []
 	},
 	mutations: {
-		SET_TOKEN (state, token) {
+		SET_TOKEN(state, token) {
 			state.token = token;
 		},
-		SET_USERINFO (state, info) {
+		SET_USERINFO(state, info) {
 			state.name = info.name;
 			state.username = info.username;
 			state.roles = info.roles;
 		},
-		USERLIST (state, data) {
+		USERLIST(state, data) {
 			state.list = data.list
 			state.total = data.total;
 		},
-		GET_INFOLIST (state, data) {
+		GET_INFOLIST(state, data) {
 			state.otherList = data;
 		},
-		CLEARINFO (state) {
+		CLEARINFO(state) {
 			state.name = '';
 			state.username = '';
 			state.roles = null;
 		}
 	},
 	actions: {
-		clearInfo ({commit}) {
+		clearInfo({ commit }) {
 			commit('CLEARINFO')
 		},
-		userLogin ({state, commit}, info) {
-			let {username, pwd} = info;
-			return new Promise( (resolve, reject) => {
-				axios.post('user/login',{
+		userLogin({ state, commit }, info) {
+			let { username, pwd } = info;
+			return new Promise((resolve, reject) => {
+				axios.post('user/login', {
 					username: username,
 					pwd: md5(pwd)
-				}).then( res => {
-					// console.log(res)
+				}).then(res => {
+					// console.log('登录信息返回结果', res)
+					setToken(res.data.token);
 					state.token = getToken();
 					resolve(res)
-				}).catch( err => {
+				}).catch(err => {
 					// console.log(err)
 					reject(err)
 				})
 			})
 		},
-		getUserInfo ({state, commit}) {
-			return new Promise( (resolve, reject) => {
-				axios.get('user/info',{
+		getUserInfo({ state, commit }) {
+			return new Promise((resolve, reject) => {
+				axios.get('user/info', {
 					token: state.token
-				}).then( res => {
+				}).then(res => {
 					console.log(res)
 					commit('SET_USERINFO', res.data)
 					resolve(res)
-				}).catch( err => {
+				}).catch(err => {
 					// console.log(err)
 					reject(err)
 				})
 			})
 		},
-		getUserList ({commit}, params) {
-			return new Promise( (resolve, reject) => {
-				axios.get('user/list', params).then( res => {
+		getUserList({ commit }, params) {
+			return new Promise((resolve, reject) => {
+				axios.get('user/list', params).then(res => {
 					console.log(res)
 					commit('USERLIST', res.data)
 					resolve(res)
-				}).catch( err => {
+				}).catch(err => {
 					// console.log(err)
 					reject(err)
 				})
 			})
 		},
-		addUser ({commit}, info) {
+		addUser({ commit }, info) {
 			info.pwd = md5(info.pwd)
-			return new Promise( (resolve, reject) => {
+			return new Promise((resolve, reject) => {
 				axios.post('user/add', info)
-					.then( res => {
+					.then(res => {
 						resolve(res)
-					}).catch( err => {
+					}).catch(err => {
 						reject(err)
 					})
 			})
 		},
-		delUser ({commit}, id) {
-			return new Promise( (resolve, reject) => {
-				axios.get('user/del', {id: id})
-					.then( res => {
+		delUser({ commit }, id) {
+			return new Promise((resolve, reject) => {
+				axios.get('user/del', { id: id })
+					.then(res => {
 						resolve(res)
-					}).catch( err => {
+					}).catch(err => {
 						reject(err)
 					})
 			})
 		},
-		updateUser ({commit}, info) {
+		updateUser({ commit }, info) {
 			info.pwd = md5(info.pwd)
 			info.old_pwd = md5(info.old_pwd)
-			return new Promise( (resolve, reject) => {
+			return new Promise((resolve, reject) => {
 				axios.post('user/update', info)
-					.then( res => {
+					.then(res => {
 						resolve(res)
-					}).catch( err => {
+					}).catch(err => {
 						reject(err)
 					})
 			})

@@ -27,11 +27,11 @@ module.exports = {
             console.log('token排查，获取的ctx为：', ctx);
             console.log('token排查，获取的token为：', token);
 
-            ctx.cookies.set(conf.auth.tokenKey, token, {
-                httpOnly: false,  // 是否只用于http请求中获取
-            });
+            // ctx.cookies.set(conf.auth.tokenKey, token, {
+            //     httpOnly: false,  // 是否只用于http请求中获取
+            // });
             console.log('登陆成功')
-            ctx.send({ message: '登录成功' });
+            ctx.send({ message: '登录成功', token: token });
         } catch (e) {
             if (e === '暂无数据') {
                 console.log('用户名不存在')
