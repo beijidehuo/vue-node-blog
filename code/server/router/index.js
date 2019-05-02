@@ -21,7 +21,7 @@ export default app => {
                 resField[field] = urlResult[i];
             });
             let origin = resField.scheme + "://" + resField.host;
-            if (resField.port != -1) {
+            if (resField.port) {
                 origin += ":" + resField.port;
             }
 
